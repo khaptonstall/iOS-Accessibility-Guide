@@ -12,7 +12,7 @@ These 3 key terms help enable Assistive Technologies (such as VoiceOver) express
 ### Name
 A name is used to inform the user of an element's purpose.
 
-On iOS, name correlates to an element's `accessibilityLabel`. For some common elements, this value is automatically derived by the system.
+Name correlates to an element's `accessibilityLabel` property. For some common elements, this value is automatically derived by the system:
 
 ```swift
 let label = UILabel()
@@ -36,7 +36,7 @@ slider.accessibilityLabel = "Volume"
 ### Role
 The role expresses the affordances an element offers to the user. 
 
-`UIAccessibilityTraits` are how iOS defines an element's role, as well as its state (e.x. whether it is enabled or disabled) and properties (e.x. how Assistive Technologies may interact with the element).
+Role correlates to an element's `accessibilityTraits` property (which has the type `UIAccessibilityTraits`). These traits also help define an element's state (e.x. whether it is enabled or disabled) and properties (e.x. how Assistive Technologies may interact with the element).
 
 ```swift
 let button = UIButton()
@@ -46,3 +46,13 @@ button.isEnable = false
 
 ### Value
 An element's value can contain secondary information about that element and may change programmatically or with user interaction.
+
+Value correlates to an element's `accessibilityValue` property. While many element's won't have a value, there are some clear examples, such as a `UISlider`:
+
+```swift
+let slider = UISlider()
+slider.minimumValue = 0
+slider.maximumValue = 10
+slider.value = 2
+// slider.accessibilityValue == "20%"
+```
