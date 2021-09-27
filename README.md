@@ -96,10 +96,10 @@ The user hears "50%, Adjustable":
 - "Adjustable" represents the **role**, letting the user know this component allows for continuous adjustment through a range of values
 - The component has no **name**
 
-## Building Accessible User Interfaces
+# Building Accessible User Interfaces
 As we saw in the last example with the `UISlider`, the component had no **name**. How does the user know what they're changing the value of when they adjust slider? While UIKit components will often be accessible in the sense that a user can interact with them, it may not result in an enjoyable experience for the user and could even lead to confusion. Let's look at some situations where you'll need to assist iOS in making components fully accessible.
 
-### System Components Without Text/Title Properties
+## Making System Components Without Text/Title Properties Fully Accessible
 
 It's clear to us after seeing how a `UISlider` is read aloud to a user that we need to do a bit more work to ensure the component has a clear **name** to inform the user what exactly they're adjusting. Remember that the **name** is represented by the component's `accessibilityLabel`, so we only need one line of code:
 ```swift
@@ -111,7 +111,7 @@ slider.accessibilityLabel = "Volume"
 ```
 The user now hears "Volume, 50%, Adjustable", which correspond to the **name**, **value**, and **role**, respectively.
 
-### System Components Represented With Images
+## Making System Components Represented With Images Fully Accessible
 
 Another common example where we'll need to manually add a name is when we have a `UIButton` that uses an image rather than a title to represent what it does. Let's say we have a download button using an icon from our Assets catalog:
 ```swift
@@ -130,4 +130,33 @@ button.accessibilityLabel = "Download"
 ```
 The user now hears "Download, Button".
 
-#### Custom UI Components
+## Custom User Interface Components
+I should preface this section by saying the following: **where possible, inherit from system components**. If your custom component acts like a system button, segmented control, switch, etc., consider subclassing the corresponding system components, such as `UIButton`, `UISegmentedControl`, `UISwitch`, etc. These components have already been built to be accessible on iOS, so subclassing can both reduce the amount of upfront work necessary to make them accessible and avoid the cost of maintenance for any accessibility changes throughout the years.
+
+### Ensuring Your Interface Components Express Their Affordances
+
+### Grouping Content to Simplify Navigation
+When content on screen is visually grouped together, it can be easy for a sighted user to quickly read as a single item and move on, however it may take a user using Assistive Technologies much more effort to read and navigate through the screen if we don't use accessibility APIs to group that content.
+
+Say we've built a custom `UIView` which contains information about a downloadable app. It has an icon, title, description, rating, and price:
+
+![GroupedContentExample](https://user-images.githubusercontent.com/6239518/134990825-7370d591-d184-46b8-89df-968ad96f4531.png)
+
+As a sighted user, the grouping of elements is clear. And if there are multiple elements, your eyes can easily jump between them:
+
+![GroupedContentExample_Multiple](https://user-images.githubusercontent.com/6239518/134991195-c746923c-80ee-4c27-abbc-0fa478423239.png)
+
+Let's see what the experience for a VoiceOver user will be (where "quoted text" is VoiceOver speaking and _italicized text_ is a user action):
+
+"Apple Maps"  
+_Swipes right_  
+"Navigate and explore the world"  
+_Swipes right_  
+Rated 3 out of 5 stars"  
+_Swipes right_  
+"Free"  
+_Swipes right_  
+... and so on with the next view
+
+
+### Making the Contents of Container Views Accessible
