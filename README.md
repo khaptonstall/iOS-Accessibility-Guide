@@ -96,10 +96,10 @@ The user hears "50%, Adjustable":
 - "Adjustable" represents the **role**, letting the user know this component allows for continuous adjustment through a range of values
 - The component has no **name**
 
-### Examples Where the System Needs Your Help
-As we saw in the last example with the `UISlider`, the component had no **name**. How does the user know what they're changing the value of when they interact with the slider? This is where you come in. Let's look at some situations where you'll need to assist iOS in making components fully accessible.
+## Building Accessible User Interfaces
+As we saw in the last example with the `UISlider`, the component had no **name**. How does the user know what they're changing the value of when they interact with the slider? While UIKit components will often be accessible in the sense that a user can interact with them, it may not result in an enjoyable experience for the user and could even lead to confusion. Let's look at some situations where you'll need to assist iOS in making components fully accessible.
 
-#### System Components Without Text/Title Properties
+### System Components Without Text/Title Properties
 
 It's clear to us after seeing how a `UISlider` is read aloud to a user that we need to do a bit more work to ensure the component has a clear **name** to inform the user what exactly they're adjusting. Remember that the **name** is represented by the component's `accessibilityLabel`, so we only need one line of code:
 ```swift
@@ -111,7 +111,7 @@ slider.accessibilityLabel = "Volume"
 ```
 The user now hears "Volume, 50%, Adjustable", which correspond to the **name**, **value**, and **role**, respectively.
 
-#### System Components Represented With Images
+### System Components Represented With Images
 
 Another common example where we'll need to manually add a name is when we have a `UIButton` that uses an image rather than a title to represent what it does. Let's say we have a download button using an icon from our Assets catalog:
 ```swift
