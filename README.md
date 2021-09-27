@@ -97,7 +97,7 @@ The user hears "50%, Adjustable":
 - The component has no **name**
 
 ## Building Accessible User Interfaces
-As we saw in the last example with the `UISlider`, the component had no **name**. How does the user know what they're changing the value of when they interact with the slider? While UIKit components will often be accessible in the sense that a user can interact with them, it may not result in an enjoyable experience for the user and could even lead to confusion. Let's look at some situations where you'll need to assist iOS in making components fully accessible.
+As we saw in the last example with the `UISlider`, the component had no **name**. How does the user know what they're changing the value of when they adjust slider? While UIKit components will often be accessible in the sense that a user can interact with them, it may not result in an enjoyable experience for the user and could even lead to confusion. Let's look at some situations where you'll need to assist iOS in making components fully accessible.
 
 ### System Components Without Text/Title Properties
 
