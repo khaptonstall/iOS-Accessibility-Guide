@@ -152,11 +152,12 @@ Let's see what the experience for a VoiceOver user will be (where "quoted text" 
 _Swipes right_  
 "Navigate and explore the world"  
 _Swipes right_  
-Rated 3 out of 5 stars"  
+"Rated 3 out of 5 stars"  
 _Swipes right_  
 "Free"  
 _Swipes right_  
-... and so on with the next view
+...and so on with the next view
 
+It takes a VoiceOver user **5 swipes per view** to navigate through this user interface. Grouping the content with accessibility APIs will take this from 5 swipes down to 1.
 
 ### Making the Contents of Container Views Accessible
