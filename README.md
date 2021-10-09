@@ -158,6 +158,55 @@ _Swipes right_
 _Swipes right_  
 ...and so on with the next view
 
-It takes a VoiceOver user **5 swipes per view** to navigate through this user interface. Grouping the content with accessibility APIs will take this from 5 swipes down to 1.
+It takes a VoiceOver user **5 swipes per view** to navigate through this user interface. Grouping the content with accessibility APIs will take this from 5 swipes down to 1. To do this, you can overrride the view's `accessibilityElements` property to provide just a single accessibility element:
+ 
+ ```swift
+private var _accessibilityElements: [Any]?
+
+override var accessibilityElements: [Any]? {
+    get {
+        // If we've already generated the elements, return them.
+        if let _accessibilityElements = _accessibilityElements {
+            return _accessibilityElements
+        }
+        
+        var elements: [UIAccessibilityElement] = []
+
+        // Create a single element representing all the text inside the view.
+        let labelsElement = UIAccessibilityElement(accessibilityContainer: self)
+        // Define an accessibility frame that captures all the labels so VoiceOver
+        // knows where the grouped accessibility element is on screen.
+        labelsElement.accessibilityFrameInContainerSpace = self.titleLabel.frame
+          .union(self.descriptionLabel.frame)
+          .union(self.ratingLabel.frame)
+          .union(self.priceLabel.frame)
+
+        // Create an accessibility label that contains the text from each of the labels.
+        labelsElement.accessibilityLabel = """
+          \(self.titleLabel.text!), \(self.descriptionLabel.text!), \(self.ratingLabel.text!). Price: \(self.priceLabel.text!)
+        """
+        
+        elements.append(labelsElement)
+
+        // Cache the elements.
+        self._accessibilityElements = elements
+
+        return elements
+    }
+    set {
+        self._accessibilityElements = newValue
+    }
+}
+```
+
+Let's break this down.
+
+First, you'll notice we're storing a local copy of our accessibility elements inside the property `private var _accessibilityElements: [Any]?` and returning them whenever `accessibilityElements` is accessed, if they exist. The reason for this caching mechanism is the VoiceOver expects a consistent array of accessibility elements when navigating. If you _didn't_ implement this cache, you user would end up in an infinite loop when attempting to swipe through the first view because the `accessibilityElements` array will keep getting regenerated.
+
+Next, we're creating a single `UIAccessibilityElement` to represent all of our labels. This will allow the user to perform a single swipe to navigate over our view. We set the `accessibilityFrameInContainerSpace` property to be a union of all the label frames. This ensures VoiceOver knows where our single, grouped element is on screen. Then we set the `accessibilityLabel` of the element so that it reads out the information contained in each of our labels.
+
+The last step caches the accessibility elements array to avoid that infinite VoiceOver loop.
+
+Now the user will hear: "Apple Maps, Navigate and explore the world, Rated 3 out of 5 stars. Price: Free" as a single sentence.
 
 ### Making the Contents of Container Views Accessible
