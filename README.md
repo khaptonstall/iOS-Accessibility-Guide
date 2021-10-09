@@ -183,7 +183,7 @@ override var accessibilityElements: [Any]? {
 
         // Create an accessibility label that contains the text from each of the labels.
         labelsElement.accessibilityLabel = """
-          \(self.titleLabel.text!), \(self.descriptionLabel.text!), \(self.ratingLabel.text!). Price: \(self.priceLabel.text!)
+          \(self.titleLabel.text!), \(self.descriptionLabel.text!), \(self.ratingLabel.text!), \(self.priceLabel.text!)
         """
         
         elements.append(labelsElement)
@@ -207,6 +207,6 @@ Next, we're creating a single `UIAccessibilityElement` to represent all of our l
 
 The last step caches the accessibility elements array to avoid that infinite VoiceOver loop.
 
-Now the user will hear: "Apple Maps, Navigate and explore the world, Rated 3 out of 5 stars. Price: Free" as a single sentence.
+Now the user will hear: "Apple Maps, Navigate and explore the world, Rated 3 out of 5 stars, Free" as a single sentence.
 
 ### Making the Contents of Container Views Accessible
