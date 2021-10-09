@@ -209,4 +209,46 @@ The last step caches the accessibility elements array to avoid that infinite Voi
 
 Now the user will hear: "Apple Maps, Navigate and explore the world, Rated 3 out of 5 stars, Free" as a single sentence.
 
+<details>
+  <summary>Expand for a SwiftUI Example</summary>
+  
+  ```swift
+    struct AppPreviewRow: View {
+    let appPreview: AppPreview
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: "photo")
+                .resizable()
+                .frame(width: 40, height: 40)
+                .aspectRatio(contentMode: .fit)
+                // Don't include the image as an accessible element.
+                .accessibilityHidden(true)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(self.appPreview.name)
+                Text(self.appPreview.description)
+                Text("Rated \(self.appPreview.rating) out of 5 stars")
+
+                Spacer()
+            }
+            // Group the labels so VoiceOver reads them together.
+            // Without this, VoiceOver will read right-to-left, so a user
+            // will hear "App Name", "Price", "App Description", "App Rating".
+            .accessibilityElement(children: .combine)
+
+            Spacer()
+
+            Text(self.appPreview.price)
+                .frame(alignment: .trailing)
+        }
+        .frame(alignment: .top)
+        .padding([.top, .bottom, .leading, .trailing], 10)
+        // Group the children so VoiceOver reads them as a single element.
+        .accessibilityElement(children: .combine)
+    }
+}
+  ```
+</details>
+
 ### Making the Contents of Container Views Accessible
